@@ -1,0 +1,5 @@
+body { margin: 0; font: 16px Arial,sans-serif; background: #ecdcc9; color: #4d362b; }
+header { text-align: center; padding: 32px; background: #604331; color: white; }
+main { max-width: 720px; margin: 24px auto; padding: 0 16px; }
+article { display: block; background: #fffaf3; margin: 16px 0; padding: 18px; border-left: 5px solid #b07843; }
+article h2 { margin: 0 0 8px; } span { color: #a36a29; }

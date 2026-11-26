@@ -1,0 +1,10 @@
+-- Пример присоединения. Перед запуском проверить реальные пути MDF/LDF на сервере.
+-- Сначала отсоединить MySampleDB через Tasks > Detach, закрыв подключения.
+-- При необходимости использовать следующую команду в master:
+-- EXEC sys.sp_detach_db @dbname = N'MySampleDB';
+-- Скопировать MDF и LDF при отсоединённой БД.
+-- Изменить пути ниже и выполнить блок только вручную:
+-- CREATE DATABASE MySampleDB ON
+-- (FILENAME = N'C:\DatabaseLab\MySampleDB.mdf'),
+-- (FILENAME = N'C:\DatabaseLab\MySampleDB_log.ldf')
+-- FOR ATTACH;

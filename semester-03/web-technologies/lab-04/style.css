@@ -1,0 +1,5 @@
+* { box-sizing:border-box; } body { font: 16px Arial; background:#eaf1f7; margin:0; }
+main { width:min(420px,calc(100% - 32px)); margin:40px auto; background:white; padding:24px; border:1px solid #c2d1df; border-radius:8px; }
+h1 { margin-top:0; } label { display:block; margin-top:14px; }
+input:not([type=checkbox]) { width:100%; padding:10px; margin:6px 0; border:1px solid #a6b9c9; border-radius:4px; }
+input:focus { outline:2px solid #296caa; } button { display:block; width:100%; margin-top:22px; padding:12px; border:0; border-radius:4px; color:white; background:#285e8e; cursor:pointer; }

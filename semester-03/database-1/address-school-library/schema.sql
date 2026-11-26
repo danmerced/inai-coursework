@@ -1,0 +1,13 @@
+PRAGMA foreign_keys=ON;
+CREATE TABLE address(id INTEGER PRIMARY KEY,last_name TEXT NOT NULL,first_name TEXT NOT NULL,birthday TEXT,gender TEXT CHECK(gender IN ('М','Ж')),city TEXT,street TEXT,home_phone TEXT,mobile_phone TEXT);
+INSERT INTO address VALUES(1,'Иванова','Анна','2005-03-20','Ж','Бишкек','Улица 1','11-22-33','000-111'),(2,'Петров','Иван','2005-04-10','М','Ош','Улица 2','44-55-66','000-222');
+CREATE TABLE students(id INTEGER PRIMARY KEY,full_name TEXT NOT NULL,class TEXT,birth_year INTEGER,address TEXT,phone TEXT);
+CREATE TABLE grades(student_id INTEGER PRIMARY KEY REFERENCES students(id),credit1 INTEGER CHECK(credit1 BETWEEN 0 AND 100),credit2 INTEGER CHECK(credit2 BETWEEN 0 AND 100),credit3 INTEGER CHECK(credit3 BETWEEN 0 AND 100));
+INSERT INTO students VALUES(1,'Анна Иванова','10А',2009,'Улица 1','000-001'),(2,'Иван Петров','10Б',2009,'Улица 2','000-002'),(3,'Мария Соколова','10А',2009,'Улица 3','000-003');
+INSERT INTO grades VALUES(1,90,85,95),(2,80,75,85),(3,70,75,80);
+CREATE TABLE readers(id INTEGER PRIMARY KEY,student_id INTEGER UNIQUE REFERENCES students(id));
+CREATE TABLE books(id INTEGER PRIMARY KEY,author TEXT NOT NULL,title TEXT NOT NULL,publication_year INTEGER);
+CREATE TABLE loans(id INTEGER PRIMARY KEY,reader_id INTEGER REFERENCES readers(id),book_id INTEGER REFERENCES books(id),issued_on TEXT,returned_on TEXT);
+INSERT INTO readers VALUES(1,1),(2,2),(3,3);
+INSERT INTO books VALUES(1,'А. Пушкин','Капитанская дочка',1836),(2,'Н. Гоголь','Ревизор',1836);
+INSERT INTO loans VALUES(1,1,1,'2025-10-01','2025-10-10'),(2,2,2,'2025-10-05',NULL);

@@ -1,0 +1,6 @@
+body { font: 18px Arial; text-align:center; background:#eef1f5; }
+.clock { position:relative; width:250px; height:250px; border:8px solid #344054; border-radius:50%; margin:40px auto; background:white; }
+.clock span { position:absolute; font-weight:bold; } .n12{top:7px;left:50%;transform:translateX(-50%)} .n3{right:10px;top:50%;transform:translateY(-50%)} .n6{bottom:7px;left:50%;transform:translateX(-50%)} .n9{left:10px;top:50%;transform:translateY(-50%)}
+.hand { position:absolute; left:50%; bottom:50%; width:5px; background:#344054; transform-origin:50% 100%; animation:rotate linear infinite; border-radius:3px; }
+.hour {height:62px;animation-duration:43200s;animation-delay:var(--hour-delay,0s)} .minute {height:90px;animation-duration:3600s;animation-delay:var(--minute-delay,0s)} .second {height:105px;width:2px;background:#c74545;animation-duration:60s;animation-delay:var(--second-delay,0s)} .pin{position:absolute;width:12px;height:12px;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;background:#344054}
+@keyframes rotate { from {transform:translateX(-50%) rotate(0deg)} to {transform:translateX(-50%) rotate(360deg)} }

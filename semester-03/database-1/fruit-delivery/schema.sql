@@ -1,0 +1,15 @@
+PRAGMA foreign_keys = ON;
+CREATE TABLE clients(id INTEGER PRIMARY KEY, company TEXT NOT NULL, contact TEXT, billing_address TEXT, city TEXT, postal_code TEXT, country TEXT, phone TEXT);
+CREATE TABLE suppliers(id INTEGER PRIMARY KEY, company TEXT NOT NULL, tax_rate REAL DEFAULT 0, address TEXT, city TEXT, postal_code TEXT, country TEXT, phone TEXT, payment_method TEXT);
+CREATE TABLE employees(id INTEGER PRIMARY KEY, first_name TEXT NOT NULL, last_name TEXT NOT NULL, position TEXT, extension TEXT, phone TEXT);
+CREATE TABLE products(id INTEGER PRIMARY KEY, supplier_id INTEGER REFERENCES suppliers(id), name TEXT NOT NULL, producer TEXT, price NUMERIC NOT NULL CHECK(price>=0));
+CREATE TABLE orders(id INTEGER PRIMARY KEY, client_id INTEGER NOT NULL REFERENCES clients(id), employee_id INTEGER REFERENCES employees(id), placed_at TEXT NOT NULL, order_number TEXT NOT NULL UNIQUE, recipient TEXT, delivery_address TEXT, postal_code TEXT, recipient_phone TEXT);
+CREATE TABLE order_details(id INTEGER PRIMARY KEY, order_id INTEGER NOT NULL REFERENCES orders(id), product_id INTEGER NOT NULL REFERENCES products(id), quantity INTEGER NOT NULL CHECK(quantity>0), price NUMERIC NOT NULL CHECK(price>=0), discount REAL DEFAULT 0 CHECK(discount BETWEEN 0 AND 1));
+CREATE TABLE payments(id INTEGER PRIMARY KEY, order_id INTEGER NOT NULL REFERENCES orders(id), amount NUMERIC NOT NULL CHECK(amount>=0), paid_at TEXT, method TEXT);
+INSERT INTO clients VALUES(1,'Fresh Market','Анна','Улица 1','Бишкек','720001','Кыргызстан','000-001'),(2,'Green Shop','Иван','Улица 2','Бишкек','720002','Кыргызстан','000-002'),(3,'Fruit Cafe','Мария','Улица 3','Ош','723500','Кыргызстан','000-003');
+INSERT INTO suppliers VALUES(1,'Сад',0.12,'Дорога 1','Бишкек','720003','Кыргызстан','000-010','Перевод'),(2,'Ферма',0.12,'Дорога 2','Ош','723500','Кыргызстан','000-011','Перевод');
+INSERT INTO employees VALUES(1,'Иван','Иванов','Менеджер','101','000-100'),(2,'Анна','Петрова','Менеджер','102','000-101');
+INSERT INTO products VALUES(1,1,'Апельсин','Сад',120),(2,1,'Абрикос','Сад',150),(3,2,'Ананас','Ферма',240),(4,2,'Яблоко','Ферма',85),(5,1,'Груша','Сад',105);
+INSERT INTO orders VALUES(1,1,1,'2025-10-01','D001','Fresh Market','Улица 1','720001','000-001'),(2,2,2,'2025-10-02','D002','Green Shop','Улица 2','720002','000-002'),(3,1,1,'2025-10-03','D003','Fresh Market','Улица 1','720001','000-001'),(4,3,2,'2025-10-04','D004','Fruit Cafe','Улица 3','723500','000-003');
+INSERT INTO order_details VALUES(1,1,1,20,120,0.1),(2,1,2,12,150,0),(3,2,4,10,85,0.05),(4,3,3,5,240,0),(5,4,5,40,105,0.1);
+INSERT INTO payments VALUES(1,1,3960,'2025-10-01','Перевод'),(2,2,807.5,'2025-10-02','Наличные'),(3,4,2000,'2025-10-04','Перевод');
