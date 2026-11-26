@@ -4,5 +4,4 @@
 
 ```bash
 python main.py
-python -m unittest -v
 ```

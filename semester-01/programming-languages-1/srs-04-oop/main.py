@@ -1,12 +1,9 @@
-from dataclasses import dataclass, field
-
-
-@dataclass(eq=False)
 class Book:
-    title: str
-    author: str
-    year: int
-    available: bool = True
+    def __init__(self, title, author, year):
+        self.title = title
+        self.author = author
+        self.year = year
+        self.available = True
 
     def borrow(self):
         if not self.available:
@@ -53,15 +50,13 @@ class Reader(LibraryMember):
         return f"{super().get_info()} — книг: {len(self._books)}"
 
 
-@dataclass
 class Employee:
-    name: str
-    position: str
-    salary: float
-
-    def __post_init__(self):
-        if self.salary < 0:
+    def __init__(self, name, position, salary):
+        if salary < 0:
             raise ValueError("Зарплата не может быть отрицательной")
+        self.name = name
+        self.position = position
+        self.salary = salary
 
     def get_info(self):
         return f"{self.name} ({self.position}): {self.salary:.2f}"
@@ -72,10 +67,10 @@ class Manager(Employee):
         return f"{super().get_info()} — руководитель"
 
 
-@dataclass
 class Department:
-    name: str
-    employees: list = field(default_factory=list)
+    def __init__(self, name):
+        self.name = name
+        self.employees = []
 
     def add_employee(self, employee):
         if not isinstance(employee, Employee):

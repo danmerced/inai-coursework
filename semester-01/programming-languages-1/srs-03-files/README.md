@@ -4,9 +4,6 @@
 
 ```bash
 python -m pip install -r requirements.txt
-python -m unittest -v
 python main.py add 120.50 транспорт
 python main.py list
 ```
-
-Тесты создают собственные файлы во временном каталоге, включая изображение.

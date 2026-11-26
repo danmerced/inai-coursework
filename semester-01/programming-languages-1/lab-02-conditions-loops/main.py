@@ -2,7 +2,14 @@
 import random
 
 def strong_password(password):
-    return len(password) >= 8 and any(x.isdigit() for x in password) and any(x.isalpha() for x in password)
+    has_digit = False
+    has_letter = False
+    for char in password:
+        if char.isdigit():
+            has_digit = True
+        if char.isalpha():
+            has_letter = True
+    return len(password) >= 8 and has_digit and has_letter
 
 def discounted_price(price, age):
     if price < 0 or age < 0:
@@ -25,7 +32,13 @@ def count_letters(word):
     return v, c
 
 def multiplication_table():
-    return [[i * j for j in range(1, 11)] for i in range(1, 11)]
+    table = []
+    for i in range(1, 11):
+        row = []
+        for j in range(1, 11):
+            row.append(i * j)
+        table.append(row)
+    return table
 
 def min_max(numbers):
     if not numbers:
@@ -43,7 +56,8 @@ def cash_bills(amount):
         raise ValueError("Сумма должна быть положительной и кратной 100")
     result = {}
     for bill in (5000, 1000, 500, 100):
-        result[bill], amount = divmod(amount, bill)
+        result[bill] = amount // bill
+        amount = amount % bill
     return result
 
 def guess_hint(secret, guess):
@@ -86,10 +100,18 @@ def even_numbers(start, end):
     return result
 
 def cheap_purchases(purchases):
-    return [(name, price) for name, price in purchases if price < 100]
+    result = []
+    for name, price in purchases:
+        if price < 100:
+            result.append((name, price))
+    return result
 
 def multiples_of_seven():
-    return [number for number in range(1, 101) if number % 7 == 0]
+    result = []
+    for number in range(1, 101):
+        if number % 7 == 0:
+            result.append(number)
+    return result
 
 def count_spaces(text):
     return text.count(" ")
