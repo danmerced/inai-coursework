@@ -1,0 +1,20 @@
+digraph Return {
+ graph [rankdir=TB,bgcolor=white,pad=.25,nodesep=.3,ranksep=.35,fontname="DejaVu Sans",label="Оформление возврата книги",labelloc=t,fontsize=16];
+ node [fontname="DejaVu Sans",fontsize=11,shape=box,style="rounded,filled",color="#475569",fillcolor="#eef6ff"];
+ edge [fontname="DejaVu Sans",fontsize=10,color="#475569"];
+ start [label="",shape=circle,width=.22,style=filled,fillcolor="#1e293b"];
+ end [label="",shape=doublecircle,width=.22,style=filled,fillcolor="#1e293b"];
+ auth [shape=diamond,label="Права библиотекаря?"];
+ denied [label="Отказать в доступе"];
+ select [label="Выбрать выдачу"];
+ open [shape=diamond,label="Выдача открыта?"];
+ invalid [label="Сообщить о неверном статусе"];
+ tx [label="Начать транзакцию"];
+ ret [label="Записать дату возврата\nУвеличить остаток"];
+ saved [shape=diamond,label="Сохранено?"];
+ rollback [label="Откатить изменения"];
+ confirm [label="Показать подтверждение"];
+ start->auth;auth->denied[label="нет"];denied->end;auth->select[label="да"];
+ select->open;open->invalid[label="нет"];invalid->end;open->tx[label="да"];tx->ret->saved;
+ saved->rollback[label="нет"];rollback->end;saved->confirm[label="да"];confirm->end;
+}

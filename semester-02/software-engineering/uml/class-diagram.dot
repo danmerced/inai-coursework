@@ -1,0 +1,25 @@
+digraph Classes {
+  graph [rankdir=TB, bgcolor=white, pad=.3, nodesep=.35, ranksep=.65, fontname="DejaVu Sans", label="Классы библиотечной системы",labelloc=t,fontsize=16];
+  node [shape=record,fontname="DejaVu Sans",fontsize=11,color="#475569",style=filled,fillcolor="#f8fafc"];
+  edge [fontname="DejaVu Sans",fontsize=10,color="#64748b"];
+  Account [label="{Account|- id : int\l- name : String\l- email : String\l- passwordHash : String\l- role : Role\l- active : boolean\l}"];
+  Book [label="{Book|- id : int\l- isbn : String\l- title : String\l- author : String\l- genre : String\l- publicationYear : int\l- totalCopies : int\l- availableCopies : int\l}"];
+  Loan [label="{Loan|- id : int\l- issuedAt : LocalDate\l- dueAt : LocalDate\l- returnedAt : LocalDate\l|+ isOverdue(date) : boolean\l}"];
+  AuthService [label="{AuthService|+ register(name,email,password)\l+ login(email,password) : Account\l+ resetPassword(token,password)\l+ logout()\l}"];
+  CatalogService [label="{CatalogService|+ search(query,sort) : List\l+ add(actor,book)\l+ update(actor,book)\l}"];
+  LoanService [label="{LoanService|+ issue(actor,readerId,bookId,dueAt) : Loan\l+ returnBook(actor,loanId)\l+ history(actor) : List\l}"];
+  AdminService [label="{AdminService|+ block(actor,accountId)\l+ deactivate(actor,accountId)\l+ overdue(actor) : List\l+ notifyReader(actor,loanId)\l+ report(actor,period,genre)\l}"];
+  BackupService [label="{BackupService|+ createBackup(actor)\l+ scheduleBackup(actor,schedule)\l+ restore(actor,backup)\l}"];
+  LibraryRepository [label="{LibraryRepository|+ findBook(id) : Book\l+ findAccount(id) : Account\l+ findLoan(id) : Loan\l+ saveBook(book)\l+ saveLoan(loan)\l}"];
+  {rank=same;AuthService;CatalogService;LoanService}
+  {rank=same;AdminService;BackupService}
+  {rank=same; Account;Book}
+  AuthService->LibraryRepository [style=dashed,arrowhead=vee];
+  CatalogService->LibraryRepository [style=dashed,arrowhead=vee];
+  LoanService->LibraryRepository [style=dashed,arrowhead=vee];
+  AdminService->LibraryRepository [style=dashed,arrowhead=vee];
+  BackupService->LibraryRepository [style=dashed,arrowhead=vee];
+  LibraryRepository->{Account Book Loan} [style=dashed,arrowhead=vee];
+  Account->Loan [dir=none,taillabel="1",headlabel="0..*",label="reader"];
+  Book->Loan [dir=none,taillabel="1",headlabel="0..*",label="book"];
+}

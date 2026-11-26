@@ -1,27 +1,39 @@
-digraph use_case {
-  graph [rankdir=LR, bgcolor="white", fontname="DejaVu Sans", nodesep=.4, ranksep=.8];
-  node [fontname="DejaVu Sans", fontsize=12, shape=ellipse, style=filled, fillcolor="#f4f7fb", color="#435d77"];
-  edge [fontname="DejaVu Sans", fontsize=10, color="#46586c"];
-  student [label="«actor»\nСтудент", shape=plaintext, style=""];
-  editor [label="«actor»\nРедактор расписания", shape=plaintext, style=""];
-  subgraph cluster_system {
-    label="Система расписания";
-    style=rounded; color="#8293a5";
-    login [label="Войти"];
-    view [label="Просмотреть\nрасписание"];
-    day [label="Выбрать день"];
-    logout [label="Выйти"];
-    group [label="Выбрать группу"];
-    add [label="Добавить занятие"];
-    edit [label="Изменить занятие"];
-    validate [label="Проверить конфликт"];
-    del [label="Удалить занятие"];
-    confirm [label="Подтвердить удаление"];
-    {rank=same; login; view; day; logout; group; add; edit; del;}
-    add -> validate [style=dashed, label="«include»"];
-    edit -> validate [style=dashed, label="«include»"];
-    del -> confirm [style=dashed, label="«include»"];
-  }
-  student -> {login view day logout} [dir=none];
-  editor -> {login view day logout group add edit del} [dir=none];
+digraph UseCase {
+ graph [rankdir=LR, bgcolor="white", pad=0.25, nodesep=0.23, ranksep=0.65, fontname="DejaVu Sans", splines=polyline];
+ node [fontname="DejaVu Sans", fontsize=11, color="#364152", style=filled, fillcolor="#f4f7fb"];
+ edge [fontname="DejaVu Sans", fontsize=9, color="#64748b", arrowhead=none];
+ Reader [label="«actor»\nЧитатель",shape=box,style="rounded,filled",fillcolor="#dceefe"];
+ Librarian [label="«actor»\nБиблиотекарь",shape=box,style="rounded,filled",fillcolor="#dceefe"];
+ Admin [label="«actor»\nАдминистратор",shape=box,style="rounded,filled",fillcolor="#dceefe"];
+ {rank=same;Reader;Librarian;Admin}
+ Reader->Librarian->Admin [style=invis,weight=10];
+ subgraph cluster_system {
+  label="Система управления библиотекой"; fontsize=16; fontname="DejaVu Sans"; color="#94a3b8"; style=rounded;
+  node [shape=ellipse];
+  Register [label="Регистрация"];
+  Login [label="Вход / выход"];
+  Password [label="Восстановить пароль"];
+  Find [label="Найти книгу"];
+  History [label="Просмотреть историю"];
+  Catalog [label="Вести каталог"];
+  Issue [label="Выдать книгу"];
+  Return [label="Вернуть книгу"];
+  Available [label="Проверить доступность"];
+  Stock [label="Изменить остаток"];
+  Accounts [label="Управлять аккаунтами"];
+  Overdue [label="Просрочки и уведомления"];
+  Reports [label="Формировать отчёты"];
+  Backup [label="Создать резервную копию"];
+  Restore [label="Восстановить данные"];
+  Verify [label="Проверить копию"];
+  {rank=same;Register;Login;Password;Find;History;Catalog;Issue;Return;Accounts;Overdue;Reports;Backup;Restore}
+  {rank=same;Available;Stock;Verify}
+  Issue -> Available [style=dashed,arrowhead=vee,label="«include»"];
+  Issue -> Stock [style=dashed,arrowhead=vee,label="«include»"];
+  Return -> Stock [style=dashed,arrowhead=vee,label="«include»"];
+  Restore -> Verify [style=dashed,arrowhead=vee,label="«include»"];
+ }
+ Reader -> {Register Login Password Find History};
+ Librarian -> {Login Password Find Catalog Issue Return};
+ Admin -> {Login Password Find Accounts Overdue Reports Backup Restore};
 }

@@ -1,65 +1,81 @@
 # UML — диаграмма классов
 
+![Классы библиотечной системы](uml/class-diagram.svg)
+
+[Исходник DOT](uml/class-diagram.dot)
+
 ```mermaid
 classDiagram
-    class User {
+    class Account {
         -int id
-        -String login
+        -String name
+        -String email
         -String passwordHash
-        -String salt
         -Role role
+        -boolean active
     }
-    class Student {
+    class Book {
         -int id
-        -String name
-        -int groupId
-    }
-    class Group {
-        -int id
-        -String name
-    }
-    class Lesson {
-        -int id
+        -String isbn
         -String title
-        -String teacher
+        -String author
+        -String genre
+        -int publicationYear
+        -int totalCopies
+        -int availableCopies
     }
-    class ScheduleEntry {
+    class Loan {
         -int id
-        -LocalDate date
-        -LocalTime startTime
-        -LocalTime endTime
-        -String room
+        -LocalDate issuedAt
+        -LocalDate dueAt
+        -LocalDate returnedAt
+        +isOverdue(date) boolean
     }
     class AuthService {
-        +login(login,password) User
+        +register(name,email,password)
+        +login(email,password) Account
+        +resetPassword(token,password)
         +logout()
     }
-    class ScheduleService {
-        +listByGroupAndDate(group,date) List
-        +add(user,entry)
-        +update(user,entry)
-        +delete(user,id)
-        +hasConflict(entry) boolean
+    class CatalogService {
+        +search(query,sort) List
+        +add(actor,book)
+        +update(actor,book)
     }
-    class ScheduleRepository {
-        +findByGroupAndDate(groupId,date) List
-        +save(entry)
-        +delete(id)
+    class LoanService {
+        +issue(actor,readerId,bookId,dueAt) Loan
+        +returnBook(actor,loanId)
+        +history(actor) List
     }
-    class LoginView
-    class ScheduleView
-    class EditorView
-    User "1" -- "0..1" Student : account
-    Group "1" -- "*" Student : members
-    Group "1" -- "*" ScheduleEntry : schedule
-    Lesson "1" -- "*" ScheduleEntry : subject
-    AuthService ..> User
-    ScheduleService ..> ScheduleRepository
-    ScheduleService ..> User : role check
-    ScheduleRepository ..> ScheduleEntry
-    LoginView ..> AuthService
-    ScheduleView ..> ScheduleService
-    EditorView ..> ScheduleService
+    class AdminService {
+        +block(actor,accountId)
+        +deactivate(actor,accountId)
+        +overdue(actor) List
+        +notifyReader(actor,loanId)
+        +report(actor,period,genre)
+    }
+    class BackupService {
+        +createBackup(actor)
+        +scheduleBackup(actor,schedule)
+        +restore(actor,backup)
+    }
+    class LibraryRepository {
+        +findBook(id) Book
+        +findAccount(id) Account
+        +findLoan(id) Loan
+        +saveBook(book)
+        +saveLoan(loan)
+    }
+    Account "1" -- "0..*" Loan : reader
+    Book "1" -- "0..*" Loan : book
+    AuthService ..> LibraryRepository
+    CatalogService ..> LibraryRepository
+    LoanService ..> LibraryRepository
+    AdminService ..> LibraryRepository
+    BackupService ..> LibraryRepository
+    LibraryRepository ..> Account
+    LibraryRepository ..> Book
+    LibraryRepository ..> Loan
 ```
 
-Основные сущности хранят данные, сервисы отвечают за правила доступа и валидацию, репозиторий работает с SQLite. Представления JavaFX вызывают сервисы.
+Account содержит роль и статус аккаунта; Book хранит данные фонда; Loan связывает читателя с конкретной книгой и датами выдачи и возврата. Сервисы проверяют права пользователя, применяют бизнес-правила и обращаются к хранилищу. Операции выдачи и возврата выполняются в транзакции.

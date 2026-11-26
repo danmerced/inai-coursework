@@ -1,0 +1,23 @@
+digraph Issue {
+ graph [rankdir=TB, bgcolor=white, pad=.25, nodesep=.3, ranksep=.35, fontname="DejaVu Sans", label="Оформление выдачи книги",labelloc=t,fontsize=16];
+ node [fontname="DejaVu Sans",fontsize=11,shape=box,style="rounded,filled",color="#475569",fillcolor="#eef6ff"];
+ edge [fontname="DejaVu Sans",fontsize=10,color="#475569"];
+ start [label="",shape=circle,width=.22,style=filled,fillcolor="#1e293b"];
+ end [label="",shape=doublecircle,width=.22,style=filled,fillcolor="#1e293b"];
+ auth [shape=diamond,label="Права библиотекаря?"];
+ denied [label="Отказать в доступе"];
+ input [label="Выбрать читателя, книгу и срок"];
+ validate [shape=diamond,label="Данные корректны?\nЧитатель активен?"];
+ error [label="Показать ошибку"];
+ available [shape=diamond,label="Есть экземпляр?"];
+ empty [label="Сообщить об отсутствии"];
+ tx [label="Начать транзакцию"];
+ issue [label="Создать выдачу\nУменьшить остаток"];
+ saved [shape=diamond,label="Сохранено?"];
+ rollback [label="Откатить изменения\nПоказать ошибку"];
+ confirm [label="Подтвердить выдачу"];
+ start->auth;auth->denied[label="нет"];denied->end;auth->input[label="да"];
+ input->validate;validate->error[label="нет"];error->input;validate->available[label="да"];
+ available->empty[label="нет"];empty->end;available->tx[label="да"];tx->issue->saved;
+ saved->rollback[label="нет"];rollback->end;saved->confirm[label="да"];confirm->end;
+}

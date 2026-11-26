@@ -1,32 +1,47 @@
 @startuml
 left to right direction
-actor "Студент" as Student
-actor "Редактор расписания" as Editor
-rectangle "Система расписания" {
-  usecase "Войти" as Login
-  usecase "Просмотреть расписание" as View
-  usecase "Выбрать день" as Day
-  usecase "Выбрать группу" as Group
-  usecase "Добавить занятие" as Add
-  usecase "Изменить занятие" as Edit
-  usecase "Удалить занятие" as Delete
-  usecase "Проверить конфликт" as Validate
-  usecase "Подтвердить удаление" as Confirm
-  usecase "Выйти" as Logout
+actor "Читатель" as Reader
+actor "Библиотекарь" as Librarian
+actor "Администратор" as Admin
+rectangle "Система управления библиотекой" {
+  usecase "Регистрация" as Register
+  usecase "Вход / выход" as Login
+  usecase "Восстановить пароль" as Password
+  usecase "Найти книгу" as Find
+  usecase "Просмотреть историю" as History
+  usecase "Вести каталог" as Catalog
+  usecase "Выдать книгу" as Issue
+  usecase "Вернуть книгу" as Return
+  usecase "Проверить доступность" as Available
+  usecase "Изменить остаток" as Stock
+  usecase "Управлять аккаунтами" as Accounts
+  usecase "Просрочки и уведомления" as Overdue
+  usecase "Формировать отчёты" as Reports
+  usecase "Создать резервную копию" as Backup
+  usecase "Восстановить данные" as Restore
+  usecase "Проверить копию" as Verify
 }
-Student -- Login
-Student -- View
-Student -- Day
-Student -- Logout
-Editor -- Login
-Editor -- View
-Editor -- Group
-Editor -- Day
-Editor -- Add
-Editor -- Edit
-Editor -- Delete
-Editor -- Logout
-Add ..> Validate : <<include>>
-Edit ..> Validate : <<include>>
-Delete ..> Confirm : <<include>>
+Reader -- Register
+Reader -- Login
+Reader -- Password
+Reader -- Find
+Reader -- History
+Librarian -- Login
+Librarian -- Password
+Librarian -- Find
+Librarian -- Catalog
+Librarian -- Issue
+Librarian -- Return
+Admin -- Login
+Admin -- Password
+Admin -- Find
+Admin -- Accounts
+Admin -- Overdue
+Admin -- Reports
+Admin -- Backup
+Admin -- Restore
+Issue ..> Available : <<include>>
+Issue ..> Stock : <<include>>
+Return ..> Stock : <<include>>
+Restore ..> Verify : <<include>>
 @enduml
