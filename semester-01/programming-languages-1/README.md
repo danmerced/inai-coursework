@@ -1,7 +1,5 @@
 # Языки программирования 1 (Python, Django)
 
-[Силлабус eBilim](https://lms.inai.kg/Lesson/LessonViewNew/1196)
-
 ## СРС по силлабусу
 
 - [СРС 1: средняя температура каждой области](srs-01-average-temperatures/README.md).
