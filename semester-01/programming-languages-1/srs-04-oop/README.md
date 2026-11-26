@@ -1,0 +1,8 @@
+# СРС 4 — Классы и наследование
+
+Учебная реализация примеров библиотеки и отдела сотрудников из [лекции 7](https://lms.inai.kg/Lesson/LessonViewNew/1121): Book, Reader, Employee и Department. Добавлены базовый класс LibraryMember, подкласс Manager, переопределение методов и инкапсуляция списка выданных книг. Имена и значения — демонстрационные.
+
+```bash
+python main.py
+python -m unittest -v
+```
