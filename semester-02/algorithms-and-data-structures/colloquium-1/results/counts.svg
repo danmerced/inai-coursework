@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+<rect width="640" height="360" fill="white"/>
+<g font-family="sans-serif" font-size="12" fill="#172033">
+<line x1="64" y1="285" x2="550" y2="285" stroke="#ddd"/><text x="35" y="289">0</text>
+<line x1="64" y1="245" x2="550" y2="245" stroke="#ddd"/><text x="35" y="249">10</text>
+<line x1="64" y1="205" x2="550" y2="205" stroke="#ddd"/><text x="35" y="209">20</text>
+<line x1="64" y1="165" x2="550" y2="165" stroke="#ddd"/><text x="35" y="169">30</text>
+<line x1="64" y1="125" x2="550" y2="125" stroke="#ddd"/><text x="35" y="129">40</text>
+<line x1="64" y1="85" x2="550" y2="85" stroke="#ddd"/><text x="35" y="89">50</text>
+<line x1="64" y1="45" x2="550" y2="45" stroke="#ddd"/><text x="35" y="49">60</text>
+<text x="68" y="306">-1</text>
+<text x="144" y="306">-2</text>
+<text x="220" y="306">-3</text>
+<text x="296" y="306">-4</text>
+<text x="372" y="306">-5</text>
+<text x="448" y="306">-6</text>
+<text x="524" y="306">-7</text>
+<path d="M64 35 V285 H552" fill="none" stroke="#172033"/>
+<text x="64" y="23">Function evaluations</text><text x="250" y="330">log10(epsilon)</text>
+<polyline points="75,213 151,181 227,157 303,133 379,101 455,77 531,53" fill="none" stroke="#b64e3e" stroke-width="2.5"/>
+<text x="400" y="18" fill="#b64e3e">dichotomy</text>
+<polyline points="75,233 151,217 227,197 303,177 379,157 455,137 531,121" fill="none" stroke="#276b9b" stroke-width="2.5"/>
+<text x="400" y="34" fill="#276b9b">golden</text>
+<polyline points="75,233 151,217 227,197 303,177 379,157 455,137 531,121" fill="none" stroke="#32835c" stroke-width="2.5" stroke-dasharray="5 4"/>
+<text x="400" y="50" fill="#32835c">fibonacci</text>
+</g></svg>
