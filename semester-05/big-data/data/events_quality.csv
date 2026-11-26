@@ -1,0 +1,7 @@
+event_id,city,kind,event_time
+1,Tashkent,click,2026-01-01T10:00:00
+2, tashkent , CLICK ,2026-01-01T11:00:00
+3,Samarkand,click,2026-01-01T12:00:00
+4, bukhara ,click,2026-01-01T13:00:00
+5,,click,2026-01-01T14:00:00
+6,Tashkent,unknown,2026-01-01T15:00:00

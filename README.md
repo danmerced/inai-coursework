@@ -25,4 +25,12 @@
 - [Разработка мобильных приложений](semester-04/mobile-development/README.md)
 - [Объектно-ориентированное программирование](semester-04/object-oriented-programming/README.md)
 
+## [3-й курс, 5-й семестр](semester-05/README.md)
+
+- [Искусственный интеллект](semester-05/artificial-intelligence/README.md)
+- [Введение в большие данные](semester-05/big-data/README.md)
+- [Системное программирование](semester-05/system-programming/README.md)
+- [Системы приложений](semester-05/application-systems/README.md)
+- [Разработка объектно-ориентированной системы](semester-05/object-oriented-systems/README.md)
+
 [О репозитории](ABOUT.md)

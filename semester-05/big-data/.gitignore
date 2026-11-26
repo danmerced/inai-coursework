@@ -1,0 +1,4 @@
+data/visits.csv
+data/ride_history.csv
+output/
+__pycache__/

@@ -1,0 +1,5 @@
+<!ELEMENT orders (order*)>
+<!ELEMENT order (item+)>
+<!ATTLIST order id CDATA #REQUIRED customerId CDATA #REQUIRED status CDATA #REQUIRED total CDATA #REQUIRED>
+<!ELEMENT item EMPTY>
+<!ATTLIST item productId CDATA #REQUIRED quantity CDATA #REQUIRED price CDATA #REQUIRED>

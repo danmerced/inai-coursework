@@ -1,0 +1,27 @@
+from common import *
+spark = session("integrated-lab")
+try:
+    raw, accepted, quarantine = quality(spark)
+    click = accepted.filter(F.col("kind") == "click")
+    df = click.groupBy("city").count().orderBy("city")
+    df.show()
+    click.createOrReplaceTempView("clicks")
+    sql = spark.sql("SELECT city,count(*) AS count FROM clicks GROUP BY city ORDER BY city")
+    sql.show()
+    assert df.collect() == sql.collect()
+    print("raw/accepted/quarantined", raw.count(), accepted.count(), quarantine.count())
+    quarantine.groupBy("reason").count().show()
+    print("normalized accepted", accepted.filter("normalized").count())
+    assert raw.count() == accepted.count() + quarantine.count()
+    drivers = spark.read.option("header", True).schema("driver_id INT, driver_name STRING").csv(str(DATA / "drivers.csv"))
+    unmatched = rides(spark).join(drivers, "driver_id", "left_anti")
+    unmatched.select("ride_id", "driver_id").show()
+    path = str(OUT / "week12_clicks")
+    df.write.mode("overwrite").parquet(path)
+    readback = spark.read.parquet(path).orderBy("city")
+    assert df.collect() == readback.collect()
+    print("SQL/DataFrame equality and Parquet read-back: OK")
+    # Exchange represents a shuffle for aggregating groups on partitions.
+    df.explain("formatted")
+finally:
+    spark.stop()
