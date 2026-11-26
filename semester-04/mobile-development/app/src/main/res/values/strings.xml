@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Study Notes</string>
+    <string name="header">Учебные заметки</string>
+    <string name="hint">Новая заметка</string>
+    <string name="add">Добавить</string>
+    <string name="empty">Введите текст заметки</string>
+    <string name="delete">Удалить</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete_question">Удалить заметку?</string>
+    <string name="help">Нажмите для просмотра, удерживайте для удаления.</string>
+</resources>

@@ -1,0 +1,33 @@
+CREATE DATABASE INAI_FlowerShop;
+GO
+USE INAI_FlowerShop;
+GO
+CREATE TABLE district(id INT PRIMARY KEY, name VARCHAR(80) NOT NULL);
+CREATE TABLE client_type(id INT PRIMARY KEY, name VARCHAR(80) NOT NULL);
+CREATE TABLE client(id INT PRIMARY KEY, last_name VARCHAR(100) NOT NULL, district_id INT NOT NULL REFERENCES district(id), type_id INT NOT NULL REFERENCES client_type(id));
+CREATE TABLE client_contact(id INT PRIMARY KEY, client_id INT NOT NULL REFERENCES client(id), kind VARCHAR(40), value VARCHAR(150));
+CREATE TABLE product_type(id INT PRIMARY KEY, name VARCHAR(80));
+CREATE TABLE product(id INT PRIMARY KEY, name VARCHAR(100), type_id INT REFERENCES product_type(id), price DECIMAL(10,2) NOT NULL CHECK(price>=0));
+CREATE TABLE supplier(id INT PRIMARY KEY,name VARCHAR(100));
+CREATE TABLE employee(id INT PRIMARY KEY,name VARCHAR(100));
+CREATE TABLE supply(id INT PRIMARY KEY,supplier_id INT REFERENCES supplier(id),client_id INT REFERENCES client(id),day DATE NOT NULL);
+CREATE TABLE supply_item(id INT PRIMARY KEY,supply_id INT REFERENCES supply(id),product_id INT REFERENCES product(id),qty INT NOT NULL CHECK(qty>0),price DECIMAL(10,2) NOT NULL CHECK(price>=0));
+CREATE TABLE supply_payment(id INT PRIMARY KEY,supply_id INT REFERENCES supply(id),day DATE NOT NULL,amount DECIMAL(10,2) NOT NULL CHECK(amount>0));
+CREATE TABLE sale(id INT PRIMARY KEY,client_id INT REFERENCES client(id),employee_id INT REFERENCES employee(id),day DATE NOT NULL,sale_type VARCHAR(40),order_type VARCHAR(40));
+CREATE TABLE sale_item(id INT PRIMARY KEY,sale_id INT REFERENCES sale(id),product_id INT REFERENCES product(id),qty INT NOT NULL CHECK(qty>0),price DECIMAL(10,2) NOT NULL CHECK(price>=0));
+CREATE TABLE sale_payment(id INT PRIMARY KEY,sale_id INT REFERENCES sale(id),day DATE NOT NULL,method VARCHAR(40),amount DECIMAL(10,2) NOT NULL CHECK(amount>0));
+
+INSERT INTO district VALUES(1,'North'),(2,'South');
+INSERT INTO client_type VALUES(1,'Individual'),(2,'Business');
+INSERT INTO client VALUES(1,'Demo A',1,1),(2,'Demo B',2,2),(3,'Demo C',1,1);
+INSERT INTO client_contact VALUES(1,1,'email','a@example.invalid'),(2,2,'email','b@example.invalid');
+INSERT INTO product_type VALUES(1,'Flowers'),(2,'Accessories');
+INSERT INTO product VALUES(1,'Rose',1,120),(2,'Tulip',1,80),(3,'Vase',2,300);
+INSERT INTO supplier VALUES(1,'Garden A'),(2,'Garden B');
+INSERT INTO employee VALUES(1,'Worker A'),(2,'Worker B');
+INSERT INTO supply VALUES(1,1,1,'2026-02-01'),(2,2,2,'2026-02-10'),(3,1,1,'2026-03-01');
+INSERT INTO supply_item VALUES(1,1,1,40,60),(2,1,2,30,40),(3,2,3,10,150),(4,3,1,20,65);
+INSERT INTO supply_payment VALUES(1,1,'2026-02-03',2400),(2,2,'2026-02-11',1500);
+INSERT INTO sale VALUES(1,1,1,'2026-02-05','Retail','Online'),(2,2,2,'2026-02-12','Wholesale','Store'),(3,1,2,'2026-03-02','Retail','Store');
+INSERT INTO sale_item VALUES(1,1,1,5,120),(2,1,2,2,80),(3,2,3,2,300),(4,3,1,3,130);
+INSERT INTO sale_payment VALUES(1,1,'2026-02-05','Card',760),(2,2,'2026-02-12','Cash',500),(3,3,'2026-03-02','Card',390);

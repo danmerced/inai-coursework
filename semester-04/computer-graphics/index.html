@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Растровая графика</title>
+<style>
+body{font:16px system-ui,sans-serif;color:#263241;background:#f2f5f8;margin:0}
+main{max-width:800px;margin:32px auto;padding:0 20px}
+h1{font-size:27px}
+nav,section{padding:18px;background:white;border:1px solid #dbe3ea;border-radius:10px;margin:12px 0}
+label{display:block;margin:10px 0}
+canvas{width:100%;height:auto;background:white;display:block}
+select,input{vertical-align:middle}
+small{color:#526474}
+</style>
+</head>
+<body><main>
+<h1>Компьютерная графика</h1>
+<nav>
+<label>Алгоритм: <select id="mode">
+<option value="line">Отрезок Брезенхема</option>
+<option value="circle">Окружность</option>
+<option value="polygon">Преобразование и заполнение многоугольника</option>
+</select></label>
+<label>Угол: <input id="angle" type="range" min="-180" max="180" value="0"> <output id="angleValue">0°</output></label>
+<label>Радиус / масштаб: <input id="size" type="range" min="4" max="19" value="11"> <output id="sizeValue">11</output></label>
+</nav>
+<section><canvas id="canvas" width="720" height="480"></canvas><small id="count"></small></section>
+<p>Пиксельная сетка позволяет увидеть, как непрерывная геометрия превращается в дискретное изображение.</p>
+</main>
+<script src="algorithms.js"></script>
+<script>
+const canvas=document.querySelector('#canvas'), ctx=canvas.getContext('2d');
+const mode=document.querySelector('#mode'), angle=document.querySelector('#angle'), size=document.querySelector('#size');
+const step=12, cols=60, rows=40;
+function draw(){
+    const a=Number(angle.value), r=Number(size.value);
+    document.querySelector('#angleValue').textContent=a+'°';
+    document.querySelector('#sizeValue').textContent=r;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    let points=[];
+    if(mode.value==='line'){
+        let [[x,y]]=transform([[r,0]],a,1,30,20);
+        points=line(30,20,Math.round(x),Math.round(y));
+    }else if(mode.value==='circle'){
+        points=circle(30,20,r);
+    }else{
+        const shape=transform([[-9,-6],[9,-6],[13,4],[0,11],[-13,4]],a,r/11,30,20);
+        points=fillPolygon(shape);
+    }
+    ctx.fillStyle='#245fa3';
+    for(const [x,y] of points){
+        if(x>=0&&x<cols&&y>=0&&y<rows)ctx.fillRect(x*step,y*step,step,step);
+    }
+    ctx.strokeStyle='#e6ebf0';
+    ctx.lineWidth=0.6;
+    ctx.beginPath();
+    for(let x=0;x<=cols;x++){ctx.moveTo(x*step,0);ctx.lineTo(x*step,rows*step)}
+    for(let y=0;y<=rows;y++){ctx.moveTo(0,y*step);ctx.lineTo(cols*step,y*step)}
+    ctx.stroke();
+    document.querySelector('#count').textContent='Количество вычисленных пикселей: '+points.length;
+}
+[mode,angle,size].forEach(el=>el.addEventListener('input',draw));draw();
+</script>
+</body>
+</html>

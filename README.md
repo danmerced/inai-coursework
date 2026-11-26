@@ -17,4 +17,12 @@
 - [Языки программирования 3 — Java](semester-03/programming-languages-3/README.md)
 - [Базы данных 1](semester-03/database-1/README.md)
 
+## [2-й курс, 4-й семестр](semester-04/README.md)
+
+- [Базы данных 2](semester-04/database-2/README.md)
+- [Операционные системы и компьютерная архитектура](semester-04/operating-systems/README.md)
+- [Компьютерная графика](semester-04/computer-graphics/README.md)
+- [Разработка мобильных приложений](semester-04/mobile-development/README.md)
+- [Объектно-ориентированное программирование](semester-04/object-oriented-programming/README.md)
+
 [О репозитории](ABOUT.md)

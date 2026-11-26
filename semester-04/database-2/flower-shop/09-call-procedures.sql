@@ -1,0 +1,26 @@
+USE INAI_FlowerShop;
+GO
+EXEC dbo.SupplyProducts @from='2026-02-01', @to='2026-04-01';
+EXEC dbo.SupplierProducts @supplier=1;
+EXEC dbo.SupplyByType @type=1;
+EXEC dbo.SupplyTotals @from='2026-02-01', @to='2026-04-01';
+EXEC dbo.SupplyByClient @from='2026-02-01', @to='2026-04-01', @client=1;
+EXEC dbo.SupplyPriceHistory @from='2026-02-01', @to='2026-04-01';
+EXEC dbo.SupplyPayments @from='2026-02-01', @to='2026-04-01';
+EXEC dbo.SupplyPaymentsByClient @from='2026-02-01', @to='2026-04-01', @client=1;
+EXEC dbo.SaleProducts @from='2026-02-01', @to='2026-04-01';
+EXEC dbo.ClientOrders @from='2026-02-01', @to='2026-04-01', @client=1;
+EXEC dbo.SoldProducts @from='2026-02-01', @to='2026-04-01';
+EXEC dbo.SalesByClient @from='2026-02-01', @to='2026-04-01', @client=1;
+EXEC dbo.SalePriceHistory @from='2026-02-01', @to='2026-04-01';
+EXEC dbo.CurrentPrice;
+EXEC dbo.SalePayments @from='2026-02-01', @to='2026-04-01';
+EXEC dbo.SalePaymentMethods @from='2026-02-01', @to='2026-04-01', @method='Card';
+EXEC dbo.EmployeeSales @from='2026-02-01', @to='2026-04-01', @employee=1;
+EXEC dbo.EmployeeStatistics @from='2026-02-01', @to='2026-04-01';
+EXEC dbo.DistrictSales @from='2026-02-01', @to='2026-04-01', @district=1;
+EXEC dbo.ClientTypeStatistics @from='2026-02-01', @to='2026-04-01';
+EXEC dbo.ClientContacts @client=1;
+EXEC dbo.OrdersBySaleType @from='2026-02-01', @to='2026-04-01', @kind='Retail';
+EXEC dbo.OrdersByOrderType @from='2026-02-01', @to='2026-04-01', @kind='Store';
+EXEC dbo.ProductBalance @from='2026-02-01', @to='2026-04-01';
