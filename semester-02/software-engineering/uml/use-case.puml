@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+actor "Студент" as Student
+actor "Редактор расписания" as Editor
+rectangle "Система расписания" {
+  usecase "Войти" as Login
+  usecase "Просмотреть расписание" as View
+  usecase "Выбрать день" as Day
+  usecase "Выбрать группу" as Group
+  usecase "Добавить занятие" as Add
+  usecase "Изменить занятие" as Edit
+  usecase "Удалить занятие" as Delete
+  usecase "Проверить конфликт" as Validate
+  usecase "Подтвердить удаление" as Confirm
+  usecase "Выйти" as Logout
+}
+Student -- Login
+Student -- View
+Student -- Day
+Student -- Logout
+Editor -- Login
+Editor -- View
+Editor -- Group
+Editor -- Day
+Editor -- Add
+Editor -- Edit
+Editor -- Delete
+Editor -- Logout
+Add ..> Validate : <<include>>
+Edit ..> Validate : <<include>>
+Delete ..> Confirm : <<include>>
+@enduml
