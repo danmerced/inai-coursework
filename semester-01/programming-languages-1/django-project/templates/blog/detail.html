@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="panel"><h1>{{ post.title }}</h1><small>{{ post.created_at|date:"d.m.Y H:i" }}</small>
+<div class="description">{{ post.content|linebreaks }}</div>
+<div class="actions"><a class="button" href="{% url 'blog:edit' post.pk %}">Редактировать</a>
+<form method="post" action="{% url 'blog:delete' post.pk %}">{% csrf_token %}<button class="danger">Удалить</button></form>
+<a href="{% url 'blog:list' %}">Назад</a></div></article>
+{% endblock %}

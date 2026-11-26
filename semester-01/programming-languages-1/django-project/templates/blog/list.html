@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}Блог{% endblock %}
+{% block content %}
+<div class="heading"><div><h1>Мой блог</h1><p>Личные записи и заметки.</p></div><a class="button" href="{% url 'blog:create' %}">+ Новая запись</a></div>
+{% for post in posts %}
+<article class="panel"><h2><a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a></h2><p>{{ post.content|truncatewords:25 }}</p><small>{{ post.created_at|date:"d.m.Y H:i" }}</small></article>
+{% empty %}<section class="panel empty">Записей пока нет. Создайте первую.</section>{% endfor %}
+{% endblock %}

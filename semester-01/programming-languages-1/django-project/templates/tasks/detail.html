@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel"><p class="status">{% if task.completed %}✓ Выполнено{% else %}В работе{% endif %}</p><h1>{{ task.title }}</h1>
+<div class="description">{{ task.description|linebreaks }}</div>
+<div class="actions"><a class="button" href="{% url 'tasks:edit' task.pk %}">Редактировать</a>
+<form method="post" action="{% url 'tasks:delete' task.pk %}">{% csrf_token %}<button class="danger">Удалить</button></form>
+<a href="{% url 'tasks:list' %}">Назад</a></div></section>
+{% endblock %}

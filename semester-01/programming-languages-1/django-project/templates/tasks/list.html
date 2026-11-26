@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Мои задачи{% endblock %}
+{% block content %}
+<div class="heading"><div><h1>Мои задачи</h1><p>Планируйте и отмечайте выполненное.</p></div><a class="button" href="{% url 'tasks:create' %}">+ Новая задача</a></div>
+<nav class="filters" aria-label="Фильтр задач"><a {% if not status %}aria-current="page"{% endif %} href="{% url 'tasks:list' %}">Все</a><a {% if status == 'open' %}aria-current="page"{% endif %} href="?status=open">Активные</a><a {% if status == 'done' %}aria-current="page"{% endif %} href="?status=done">Готовые</a></nav>
+{% for task in tasks %}
+<article class="panel task"><div><small class="status">{% if task.completed %}✓ Выполнено{% else %}В работе{% endif %}</small><h2><a href="{% url 'tasks:detail' task.pk %}">{{ task.title }}</a></h2><p>{{ task.description|truncatewords:20 }}</p></div>
+<form method="post" action="{% url 'tasks:toggle' task.pk %}">{% csrf_token %}<button class="secondary">{% if task.completed %}Вернуть в работу{% else %}Выполнить{% endif %}</button></form></article>
+{% empty %}<div class="panel empty">Задач нет.</div>{% endfor %}
+{% endblock %}
